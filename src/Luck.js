@@ -105,6 +105,10 @@ Luck._startTime = new Date().getTime();
             var type = typeof value;
 
             return type === 'string' || type === 'number' || type === 'boolean';
+        },
+
+        isWindow: function (value) {
+            return value instanceof Window;
         }
     });
 
