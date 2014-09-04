@@ -10,6 +10,8 @@ Luck._startTime = new Date().getTime();
     var objectPrototype = Object.prototype,
         toString = objectPrototype.toString;
 
+    Luck.global = global;
+
     Luck.apply = function (object, config, defaults) {
         if (defaults) {
             Luck.apply(object, defaults);
@@ -42,6 +44,69 @@ Luck._startTime = new Date().getTime();
     };
 
 
-    Luck.global = global;
+    Luck.apply(Luck, {
+        typeOf: function (value) {
+            return toString.call(value);
+        },
+
+        isEmpty: function (value, allowEmptyString) {
+            return (value === null) || (value === undefined) || (!allowEmptyString ? value === '' : false) || (Luck.isArray(value) && value.length === 0);
+        },
+
+        isArray: ('isArray' in Array) ? Array.isArray : function (value) {
+            return Luck.typeOf(value) === '[object Array]';
+        },
+
+        isDate: function (value) {
+            return Luck.typeOf(value) === '[object Date]';
+        },
+
+        isRegExp: function (value) {
+            return Luck.typeOf(value) === '[object RegExp]';
+        },
+
+        isString: function (value) {
+            return typeof value === 'string';
+        },
+
+        isNumber: function (value) {
+            return typeof value === 'number';
+        },
+
+        isFunction: function (value) {
+            return typeof value === 'function';
+        },
+
+        isBoolean: function (value) {
+            return typeof value === 'boolean';
+        },
+
+        isElement: function (value) {
+            return value ? value.nodeType === 1 : false;
+        },
+
+        isTextNode: function (value) {
+            return value ? value.nodeName === "#text" : false;
+        },
+
+        isDefined: function (value) {
+            return typeof value !== 'undefined';
+        },
+
+        isGlobalObject: function (value) {
+            return Luck.typeOf(value) === '[object global]';
+        },
+
+        isSimpleObject: function (value) {
+            return value instanceof Object && value.constructor === Object;
+        },
+
+        isPrimitive: function (value) {
+            var type = typeof value;
+
+            return type === 'string' || type === 'number' || type === 'boolean';
+        }
+    });
+
 
 })(window, Luck);
