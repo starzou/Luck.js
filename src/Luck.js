@@ -108,7 +108,7 @@ Luck._startTime = new Date().getTime();
         },
 
         isWindow: function (value) {
-            return value instanceof Window;
+            return value instanceof Window && value.constructor === Window;
         }
     });
 
