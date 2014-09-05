@@ -113,4 +113,4 @@ Luck._startTime = new Date().getTime();
     });
 
 
-})(window, Luck);
+})(this, Luck);
